@@ -93,7 +93,7 @@ blender -b --python-exit-code 1 --python tests/check_installed_package.py   # "P
 ## Release checklist
 
 1. Bump `version` in `checklist_tool/blender_manifest.toml`. README badges are live: never hard-code
-   versions. Don't delete the `badges` branch (CI force-pushes `release-size.json`).
+   versions.
 2. Run both test modes. Commit and push `main`. Wait for green CI.
 3. `git tag -a vX.Y.Z -m "Checklist Tool X.Y.Z" -m "<notes>"`, then `git push origin vX.Y.Z`. CI checks
    tag == manifest version, tests, builds and publishes the release with the zip. The notes come from the
@@ -102,7 +102,7 @@ blender -b --python-exit-code 1 --python tests/check_installed_package.py   # "P
 ## Git
 
 - Remote: `origin` https://github.com/mttfntn/checklist-tool-blender.git (public, not a fork).
-- Branch: `main`. Tags: `vX.Y.Z` (annotated). `badges` branch: CI-owned.
+- Branch: `main` only (keep it that way: no extra branches). Tags: `vX.Y.Z` (annotated).
 - Ignored: `__pycache__/`, `*.pyc`, `dist/`, `*.zip`, `.DS_Store`.
 - Not shipped in the zip: everything outside `checklist_tool/` (docs, tests, tools); LICENSE is added by
   the build script.

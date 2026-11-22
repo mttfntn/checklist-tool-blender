@@ -2,7 +2,6 @@
 
 [![Blender](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmttfntn%2Fchecklist-tool-blender%2Fmain%2Fchecklist_tool%2Fblender_manifest.toml&query=%24.blender_version_min&label=Blender&color=E87D0D&logo=blender&logoColor=white)](https://www.blender.org/download/)
 [![Release](https://img.shields.io/github/v/release/mttfntn/checklist-tool-blender)](https://github.com/mttfntn/checklist-tool-blender/releases/latest)
-[![Download size](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmttfntn%2Fchecklist-tool-blender%2Fbadges%2Frelease-size.json)](https://github.com/mttfntn/checklist-tool-blender/releases/latest)
 [![Tests](https://github.com/mttfntn/checklist-tool-blender/actions/workflows/ci.yml/badge.svg)](https://github.com/mttfntn/checklist-tool-blender/actions/workflows/ci.yml)
 [![License](https://img.shields.io/github/license/mttfntn/checklist-tool-blender)](LICENSE)
 [![Language](https://img.shields.io/github/languages/top/mttfntn/checklist-tool-blender)](checklist_tool/__init__.py)
