@@ -1,0 +1,61 @@
+{
+  "name": "General Project",
+  "description": "Baseline checklist for any new Blender file",
+  "items": [
+    {
+      "name": "Save file with a project name",
+      "category": "Setup",
+      "note": ""
+    },
+    {
+      "name": "Set scene units and scale",
+      "category": "Setup",
+      "note": ""
+    },
+    {
+      "name": "Organize objects into collections",
+      "category": "Scene",
+      "note": ""
+    },
+    {
+      "name": "Rename default objects",
+      "category": "Scene",
+      "note": ""
+    },
+    {
+      "name": "Apply rotation & scale",
+      "category": "Scene",
+      "note": ""
+    },
+    {
+      "name": "Assign materials to all meshes",
+      "category": "Shading",
+      "note": ""
+    },
+    {
+      "name": "No missing textures",
+      "category": "Shading",
+      "note": ""
+    },
+    {
+      "name": "Purge orphan data",
+      "category": "Cleanup",
+      "note": ""
+    },
+    {
+      "name": "Set active camera",
+      "category": "Output",
+      "note": ""
+    },
+    {
+      "name": "Set render output path",
+      "category": "Output",
+      "note": ""
+    },
+    {
+      "name": "Final save",
+      "category": "Output",
+      "note": ""
+    }
+  ]
+}

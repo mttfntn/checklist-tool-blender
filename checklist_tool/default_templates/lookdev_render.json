@@ -1,0 +1,56 @@
+{
+  "name": "Lookdev & Render",
+  "description": "Lighting, shading and final render prep",
+  "items": [
+    {
+      "name": "Set color management / view transform",
+      "category": "Setup",
+      "note": ""
+    },
+    {
+      "name": "Assign materials",
+      "category": "Shading",
+      "note": ""
+    },
+    {
+      "name": "No missing textures",
+      "category": "Shading",
+      "note": ""
+    },
+    {
+      "name": "Light the scene",
+      "category": "Lighting",
+      "note": ""
+    },
+    {
+      "name": "Set active camera",
+      "category": "Camera",
+      "note": ""
+    },
+    {
+      "name": "Match viewport and render visibility",
+      "category": "Render",
+      "note": ""
+    },
+    {
+      "name": "Set samples and denoising",
+      "category": "Render",
+      "note": ""
+    },
+    {
+      "name": "Set output path and format",
+      "category": "Render",
+      "note": ""
+    },
+    {
+      "name": "Test render a region",
+      "category": "Render",
+      "note": ""
+    },
+    {
+      "name": "Save file",
+      "category": "Output",
+      "note": ""
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "name": "Game Asset",
+  "description": "Modeling and export prep for real-time assets",
+  "items": [
+    {
+      "name": "Check polycount against budget",
+      "category": "Modeling",
+      "note": ""
+    },
+    {
+      "name": "Triangles and quads only",
+      "category": "Modeling",
+      "note": ""
+    },
+    {
+      "name": "Recalculate normals / check face orientation",
+      "category": "Modeling",
+      "note": ""
+    },
+    {
+      "name": "Apply rotation & scale",
+      "category": "Modeling",
+      "note": ""
+    },
+    {
+      "name": "Place origin at the pivot",
+      "category": "Modeling",
+      "note": ""
+    },
+    {
+      "name": "Unwrap UVs",
+      "category": "UV",
+      "note": ""
+    },
+    {
+      "name": "Check texel density",
+      "category": "UV",
+      "note": ""
+    },
+    {
+      "name": "Assign materials",
+      "category": "Shading",
+      "note": ""
+    },
+    {
+      "name": "Bake / link textures",
+      "category": "Shading",
+      "note": ""
+    },
+    {
+      "name": "Follow naming convention",
+      "category": "Export",
+      "note": ""
+    },
+    {
+      "name": "Purge orphan data",
+      "category": "Export",
+      "note": ""
+    },
+    {
+      "name": "Export FBX / glTF and test in engine",
+      "category": "Export",
+      "note": ""
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "Animation",
+  "description": "Shot setup and delivery for animation",
+  "items": [
+    {
+      "name": "Set frame rate",
+      "category": "Setup",
+      "note": ""
+    },
+    {
+      "name": "Set frame range",
+      "category": "Setup",
+      "note": ""
+    },
+    {
+      "name": "Test rig controls",
+      "category": "Rig",
+      "note": ""
+    },
+    {
+      "name": "Set shot camera",
+      "category": "Camera",
+      "note": ""
+    },
+    {
+      "name": "Blocking pass",
+      "category": "Animation",
+      "note": ""
+    },
+    {
+      "name": "Spline / polish pass",
+      "category": "Animation",
+      "note": ""
+    },
+    {
+      "name": "Clean up unused actions",
+      "category": "Cleanup",
+      "note": ""
+    },
+    {
+      "name": "Render a playblast for review",
+      "category": "Review",
+      "note": ""
+    },
+    {
+      "name": "Set render output path",
+      "category": "Output",
+      "note": ""
+    },
+    {
+      "name": "Save file",
+      "category": "Output",
+      "note": ""
+    }
+  ]
+}
