@@ -1,3 +1,15 @@
+"""Data model: the checklist stored in each scene, and the add-on preferences.
+
+``Scene.checklist`` (CHECKLIST_Data) is saved inside the .blend file: the
+tasks plus the view state (search, category filter, sort, hide done).
+``WindowManager.checklist_template`` is the Templates dropdown selection; it is
+UI state only and is not saved in files.
+
+The category filter is stored as a plain string (``filter_category_name``) and
+exposed to the UI as a dynamic enum (``filter_category``) through get/set
+functions, so it keeps working while categories are added or removed.
+"""
+
 import bpy
 from bpy.props import (BoolProperty, CollectionProperty, EnumProperty, IntProperty,
                        PointerProperty, StringProperty)
@@ -5,10 +17,13 @@ from bpy.types import AddonPreferences, PropertyGroup
 
 from . import templates
 
+# Special filter_category values: "every category" and "tasks with no category".
 ALL = "__ALL__"
 UNCATEGORIZED = "__NONE__"
 
 
+# One task. Classes registered with Blender use # comments: their docstrings
+# would become the type's description shown in Blender.
 class CHECKLIST_Item(PropertyGroup):
     name: StringProperty(name="Task", default="New task")
     done: BoolProperty(name="Done", default=False)
@@ -24,7 +39,11 @@ SORT_ITEMS = [
 
 
 def categories(data):
-    """Distinct categories in first-appearance order, with (done, total) counts."""
+    """Distinct categories in first-appearance order, with (done, total) counts.
+
+    Categories are compared after stripping spaces (case-sensitive); tasks with
+    no category are grouped under UNCATEGORIZED.
+    """
     stats = {}
     for it in data.items:
         key = it.category.strip() or UNCATEGORIZED
@@ -33,11 +52,20 @@ def categories(data):
     return stats
 
 
-# Dynamic enum strings must stay referenced while Blender uses them.
+def _category_keys(data):
+    """Enum identifiers of the category filter; the index is the enum value."""
+    return [ALL, *categories(data)]
+
+
+# Dynamic enum: Blender keeps raw pointers to these strings, so Python must keep
+# them referenced. Blender calls the items callback itself whenever the value is
+# read or set, so get/set only need the identifiers (_category_keys) and do not
+# rebuild this list a second time.
 _category_enum_cache = []
 
 
 def _category_items(self, context):
+    """Items callback of filter_category: "All" plus each category with done/total."""
     _category_enum_cache.clear()
     _category_enum_cache.append((ALL, "All Categories", "Show every category", 'NONE', 0))
     for i, (key, (d, t)) in enumerate(categories(self).items(), start=1):
@@ -47,20 +75,20 @@ def _category_items(self, context):
 
 
 def _category_get(self):
+    """Enum value for filter_category_name; a vanished category reads as All (0)."""
+    keys = _category_keys(self)
     current = self.filter_category_name or ALL
-    for ident, *_rest, value in _category_items(self, None):
-        if ident == current:
-            return value
-    return 0
+    return keys.index(current) if current in keys else 0
 
 
 def _category_set(self, value):
-    for ident, *_rest, v in _category_items(self, None):
-        if v == value:
-            self.filter_category_name = "" if ident == ALL else ident
-            return
+    """Store the chosen category's identifier ("" for All)."""
+    keys = _category_keys(self)
+    if 0 <= value < len(keys):
+        self.filter_category_name = "" if keys[value] == ALL else keys[value]
 
 
+# The checklist of one scene: tasks plus view state.
 class CHECKLIST_Data(PropertyGroup):
     items: CollectionProperty(type=CHECKLIST_Item)
     active_index: IntProperty(name="Active Task", default=0)
@@ -77,6 +105,7 @@ class CHECKLIST_Data(PropertyGroup):
                                   items=_category_items, get=_category_get, set=_category_set)
 
 
+# Add-on preferences (shared by all files): new-file template behaviour.
 class CHECKLIST_Preferences(AddonPreferences):
     bl_idname = __package__
 
@@ -101,6 +130,7 @@ class CHECKLIST_Preferences(AddonPreferences):
 
 
 def get_prefs(context=None):
+    """The add-on's preferences, or None while it is not enabled in Preferences."""
     context = context or bpy.context
     addon = context.preferences.addons.get(__package__)
     return addon.preferences if addon else None

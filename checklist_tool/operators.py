@@ -1,3 +1,11 @@
+"""Operators (``checklist.*``): edit tasks, clear filters, manage templates.
+
+Operator docstrings would become tooltips, so the tooltip is ``bl_description``
+and internal notes are # comments. Task operators work on the active scene's
+checklist and support undo; template operators work on the JSON files
+(templates.py) and are not undoable.
+"""
+
 import bpy
 from bpy.props import EnumProperty, StringProperty
 from bpy.types import Operator
@@ -7,11 +15,14 @@ from .properties import UNCATEGORIZED, get_prefs
 
 
 def _data(context):
+    """The active scene's CHECKLIST_Data."""
     return context.scene.checklist
 
 
 # --------------------------------------------------------------------------- items
 
+# Appends a task and selects it. It takes the category being filtered (so it
+# stays visible), otherwise the selected task's category.
 class CHECKLIST_OT_add(Operator):
     bl_idname = "checklist.add"
     bl_label = "Add Task"
@@ -20,7 +31,9 @@ class CHECKLIST_OT_add(Operator):
 
     def execute(self, context):
         data = _data(context)
-        if data.filter_category_name and data.filter_category_name != UNCATEGORIZED:
+        if data.filter_category_name == UNCATEGORIZED:
+            category = ""
+        elif data.filter_category_name:
             category = data.filter_category_name
         elif 0 <= data.active_index < len(data.items):
             category = data.items[data.active_index].category
@@ -33,6 +46,7 @@ class CHECKLIST_OT_add(Operator):
         return {'FINISHED'}
 
 
+# Removes the selected task; the selection moves to the next one (or the last).
 class CHECKLIST_OT_remove(Operator):
     bl_idname = "checklist.remove"
     bl_label = "Remove Task"
@@ -51,6 +65,7 @@ class CHECKLIST_OT_remove(Operator):
         return {'FINISHED'}
 
 
+# Resets the view filters (search, category, Hide Done); the sort is kept.
 class CHECKLIST_OT_clear_filters(Operator):
     bl_idname = "checklist.clear_filters"
     bl_label = "Clear Filters"
@@ -66,6 +81,8 @@ class CHECKLIST_OT_clear_filters(Operator):
 
 # --------------------------------------------------------------------------- templates
 
+# Loads the template selected in the dropdown into the checklist. Replace asks
+# for confirmation (invoke) when the checklist already has tasks.
 class CHECKLIST_OT_apply_template(Operator):
     bl_idname = "checklist.apply_template"
     bl_label = "Apply Template"
@@ -100,6 +117,8 @@ class CHECKLIST_OT_apply_template(Operator):
         return {'FINISHED'}
 
 
+# Writes the current tasks (without done state) to <slug>.json, overwriting a
+# template with the same slug, and selects it in the dropdown.
 class CHECKLIST_OT_save_template(Operator):
     bl_idname = "checklist.save_template"
     bl_label = "Save as Template"
@@ -128,6 +147,7 @@ class CHECKLIST_OT_save_template(Operator):
         return {'FINISHED'}
 
 
+# Deletes the selected template file after a confirmation.
 class CHECKLIST_OT_delete_template(Operator):
     bl_idname = "checklist.delete_template"
     bl_label = "Delete Template"
@@ -147,6 +167,8 @@ class CHECKLIST_OT_delete_template(Operator):
         return {'FINISHED'}
 
 
+# Stores the selected template as the one used for new files and marks the
+# preferences as changed, so Auto-save Preferences keeps it.
 class CHECKLIST_OT_set_default_template(Operator):
     bl_idname = "checklist.set_default_template"
     bl_label = "Set as Default"
@@ -164,6 +186,7 @@ class CHECKLIST_OT_set_default_template(Operator):
         return {'FINISHED'}
 
 
+# Opens the templates folder in the system file browser.
 class CHECKLIST_OT_open_templates_folder(Operator):
     bl_idname = "checklist.open_templates_folder"
     bl_label = "Open Templates Folder"

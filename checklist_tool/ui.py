@@ -1,3 +1,15 @@
+"""Sidebar UI in the 3D Viewport (N > Checklist).
+
+CHECKLIST_PT_main      progress, search bar, collapsible Filter section, task list
+  CHECKLIST_PT_task    fields of the selected task (sub-panel)
+  CHECKLIST_PT_templates  template dropdown and template operators (sub-panel)
+CHECKLIST_UL_items     the task list; filter_items applies search / category /
+                       hide done (task_visible) and the sort order (_sort_key).
+
+Draw code only reads data. Panel and list classes use # comments, because
+their docstrings would become tooltips.
+"""
+
 import bpy
 from bpy.types import Panel, UIList
 
@@ -5,7 +17,10 @@ from .properties import UNCATEGORIZED, get_prefs
 
 
 def task_visible(data, it):
-    """Shared by the list and the 'N of M shown' counter."""
+    """True if task `it` passes the search, category and Hide Done filters.
+
+    Used by the list and by the "Showing N of M tasks" counter, so both agree.
+    """
     if data.hide_done and it.done:
         return False
     cat = data.filter_category_name
@@ -22,12 +37,17 @@ def task_visible(data, it):
 
 
 def _sort_key(mode, items):
+    """Key function (index, task) -> sortable value for the sort mode.
+
+    Sorting only changes the display order (UIList), never the stored order.
+    """
     if mode == 'TODO_FIRST':
         return lambda i, it: (it.done, i)
     if mode == 'NAME':
         return lambda i, it: (it.name.lower(), i)
     # CATEGORY: categories in first-appearance order, uncategorized last,
-    # template order kept inside each category.
+    # stored order kept inside each category. Grouping ignores letter case
+    # ("setup" joins "Setup"); the category filter does not.
     first = {}
     for i, it in enumerate(items):
         first.setdefault(it.category.strip().lower(), i)
@@ -35,9 +55,11 @@ def _sort_key(mode, items):
 
 
 def filters_active(data):
+    """True if any filter hides tasks (search, category or Hide Done)."""
     return bool(data.search.strip() or data.filter_category_name or data.hide_done)
 
 
+# Task list. Built-in name filtering is replaced by the panel's own search bar.
 class CHECKLIST_UL_items(UIList):
     bl_idname = "CHECKLIST_UL_items"
 
@@ -71,6 +93,7 @@ class CHECKLIST_UL_items(UIList):
         return flags, order
 
 
+# Main panel; header shows done/total.
 class CHECKLIST_PT_main(Panel):
     bl_label = "Checklist"
     bl_idname = "CHECKLIST_PT_main"
@@ -150,6 +173,7 @@ class CHECKLIST_PT_main(Panel):
             sub.label(text=f"Showing {shown} of {total} tasks")
 
 
+# Selected task's fields (shown when a task is selected).
 class CHECKLIST_PT_task(Panel):
     bl_label = "Task"
     bl_idname = "CHECKLIST_PT_task"
@@ -174,6 +198,7 @@ class CHECKLIST_PT_task(Panel):
         layout.prop(item, "note")
 
 
+# Template dropdown, Replace / Append, Save / Delete, default for new files.
 class CHECKLIST_PT_templates(Panel):
     bl_label = "Templates"
     bl_idname = "CHECKLIST_PT_templates"

@@ -1,7 +1,7 @@
 schema_version = "1.0.0"
 
 id = "checklist_tool"
-version = "1.2.0"
+version = "1.2.1"
 name = "Checklist Tool"
 tagline = "Per-project checklists with reusable templates"
 maintainer = "Matteo Fontana"
@@ -9,9 +9,12 @@ type = "add-on"
 
 tags = ["User Interface", "Pipeline"]
 
-blender_version_min = "4.2.0"
+# Supported: Blender 5.3 only (max is exclusive).
+blender_version_min = "5.3.0"
+blender_version_max = "5.4.0"
 
 license = ["SPDX:GPL-3.0-or-later"]
+copyright = ["2026 Matteo Fontana"]
 
 [permissions]
 files = "Read and write checklist template JSON files"
