@@ -1,0 +1,70 @@
+name: Bug report
+description: Something does not work as described in the README
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please check the [README](https://github.com/mttfntn/checklist-tool-blender#using-it) first, including the [known limits](https://github.com/mttfntn/checklist-tool-blender#known-limits), and whether an issue for the same problem already exists.
+
+  - type: input
+    id: blender
+    attributes:
+      label: Blender version
+      description: Help › About Blender. Checklist Tool supports Blender 5.3 only.
+      placeholder: "5.3.0"
+    validations:
+      required: true
+
+  - type: input
+    id: addon
+    attributes:
+      label: Checklist Tool version
+      description: Edit › Preferences › Get Extensions (or Add-ons) › Checklist Tool
+      placeholder: "1.2.1"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows
+        - macOS
+        - Linux
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you saw, and what you expected instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: The template you used, your filter / sort / search settings, and the exact steps.
+      placeholder: |
+        1. File > New, apply "Game Asset" with Replace
+        2. Filter: Category = UV, Hide Done on
+        3. Click + ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: media
+    attributes:
+      label: Screenshots, a template or a .blend file
+      description: Drag images here (a screenshot of the Checklist panel helps). Attach the template .json if it is involved, or a small .blend (zip it to attach it).
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Error messages
+      description: Messages in the system console (Window › Toggle System Console on Windows), or any Blender error.
+      render: shell

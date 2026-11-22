@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: User guide
+    url: https://github.com/mttfntn/checklist-tool-blender#using-it
+    about: How the checklist, search, filters and templates work.
+  - name: Report a security problem privately
+    url: https://github.com/mttfntn/checklist-tool-blender/security/advisories/new
+    about: Please do not open a public issue for security problems.
